@@ -22,6 +22,47 @@
         </div>
     </div>
 
+
+    @if (session('status'))
+        <script>
+            Swal.fire(
+            'Sukses!',
+            'Pesan berhasil terkirim, Silahkan tunggu balasan kami di email anda.',
+            'success'
+        )
+        </script>
+    @endif
+
+    @error('nama')
+        <script>
+            Swal.fire(
+            'Gagal!',
+            'Nama harus diisi.',
+            'error'
+        )
+        </script>
+    @enderror
+
+    @error('email')
+        <script>
+            Swal.fire(
+            'Gagal!',
+            'Email harus diisi.',
+            'error'
+        )
+        </script>
+    @enderror
+
+    @error('pesan')
+        <script>
+            Swal.fire(
+            'Gagal!',
+            'Pesan harus diisi.',
+            'error'
+        )
+        </script>
+    @enderror
+
     <div class="row mt-5">
         <div class="col-lg-6">
             <div class="card shadow">
@@ -29,13 +70,14 @@
                     <h3>Kirim Pesan</h3>
                 </div>
                 <div class="card-body">
-                    <form action="#" class="form-group">
-                        <label for="">Nama</label>
-                        <input type="text" class="form-control">
-                        <label for="">Email</label>
-                        <input type="email" class="form-control">
-                        <label for="">Pesan</label>
-                        <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                    <form action="{{route('kirim-pesan') }}" method="POST" class="form-group">
+                        @csrf
+                        <label class="form-label" for="">Nama</label>
+                        <input name="nama" type="text" placeholder="Nama" value="{{ old('nama') }}" class="form-control @error('nama') is-invalid @enderror">
+                        <label class="form-label mt-2" for="">Email</label>
+                        <input type="email" name="email" placeholder="Email" value="{{ old('email') }}" class="form-control @error('email') is-invalid @enderror">
+                        <label class="form-label mt-2" for="">Pesan</label>
+                        <textarea name="pesan" id="" cols="30" rows="10" placeholder="Pesan" value="{{ old('pesan') }}" class="form-control @error('pesan') is-invalid @enderror"></textarea>
                         <button class="btn btn-primary mt-3">Kirim</button>
                     </form>
                 </div>
